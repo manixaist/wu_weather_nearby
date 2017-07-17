@@ -1,4 +1,4 @@
-# weather_nearby
+# wu_weather_nearby
 ### Summary:
 This project shows how to use the REST API from [WeatherUnderground](https://www.wunderground.com/api) to collect weather data from nearby personal weather stations (pws) and store information about both the pws used and the weather observations made into a MySQL database.  It then uses the tables created to show weather data for specific stations.
 
