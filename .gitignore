@@ -1,3 +1,11 @@
+# Credentials
+src/wu_api_key.py
+src/mysql_user_info.py
+
+# Parsed resonse
+RESPONSE_PARSED.txt
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,164 @@
+Python 3.6.0 (v3.6.0:41df79263a11, Dec 23 2016, 08:06:12) [MSC v.1900 64 bit (AMD64)] on win32
+Type "copyright", "credits" or "license()" for more information.
+>>> 
+REST QUERY: http://api.wunderground.com/api/{API KEY REDACATED}/geolookup/q/37.392089,-122.083347.json
+REST QUERY: http://api.wunderground.com/api/{API KEY REDACATED}/conditions/q/pws:KCAMOUNT166.json
+REST QUERY: http://api.wunderground.com/api/{API KEY REDACATED}/conditions/q/pws:KCALOSAL73.json
+________________________________________________________________________________
+
+PWS FOUND NEARBY (MAX:2 )
+________________________________________________________________________________
+
+ID: KCAMOUNT166
+KM: 1
+NEIGHBORHOOD: Gemello
+________________________________________________________________________________
+
+ID: KCALOSAL73
+KM: 2
+NEIGHBORHOOD: Cuesta Park
+
+________________________________________________________________________________
+
+OBSERVATION DATA FOR THE PWS LISTED ABOVE
+________________________________________________________________________________
+
+STATION ID: KCAMOUNT166
+TIME: 2017-07-16 13:32:15
+WEATHER: Clear
+T(F): 103.6
+T(C): 39.8
+REL HUM: 19%
+UV: 12.0
+PRECIP(IN): 0.0
+PRESSURE(IN): 29.91
+PRESSURE(MB): 1013.0
+LATITUDE: 37.391197
+LONGITUDE: -122.100815
+ELEVATION(ft): 108
+CITY: Gemello, Mountain View
+ZIPCODE: 94023
+________________________________________________________________________________
+
+STATION ID: KCALOSAL73
+TIME: 2017-07-16 13:24:55
+WEATHER: Clear
+T(F): 91.8
+T(C): 33.2
+REL HUM: 38%
+UV: 12.0
+PRECIP(IN): 0.0
+PRESSURE(IN): 29.91
+PRESSURE(MB): 1013.0
+LATITUDE: 37.371819
+LONGITUDE: -122.086212
+ELEVATION(ft): 147
+CITY: Cuesta Park, Los Altos
+ZIPCODE: 94040
+
+________________________________________________________________________________
+
+ADD DATA TO MYSQL DATABASE
+________________________________________________________________________________
+CONNECTING TO SQL HOST localhost, User:py_user, Pass:*****
+SQL: SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'wu_weather_nearby_mountainview_ca'
+OPENING DATABASE...
+SQL: USE wu_weather_nearby_mountainview_ca
+SQL: SELECT * FROM information_schema.tables WHERE table_name ='pws_nearby' AND table_schema='wu_weather_nearby_mountainview_ca'
+SQL: SELECT * FROM information_schema.tables WHERE table_name ='weather_nearby' AND table_schema='wu_weather_nearby_mountainview_ca'
+SQL: SELECT * FROM pws_nearby WHERE id='KCAMOUNT166'
+SQL: INSERT INTO pws_nearby(id, latitude, longitude, city, neighborhood) VALUES('KCAMOUNT166', 37.391197, -122.100815, 'Mountain View', 'Gemello')
+COMMITTED.
+SQL: SELECT * FROM pws_nearby WHERE id='KCALOSAL73'
+SQL: INSERT INTO pws_nearby(id, latitude, longitude, city, neighborhood) VALUES('KCALOSAL73', 37.371819, -122.086212, 'Los Altos', 'Cuesta Park')
+COMMITTED.
+SQL: INSERT INTO weather_nearby(station_id, time, weather, temp_f, temp_c, relative_humidity, uv_index, precip_in, pressure_in, pressure_mb, latitude, longitude, elevation, city, zip) VALUES('KCAMOUNT166', '2017-07-16 13:32:15', 'Clear', 103.6, 39.8, 19, 12.0, 0.0, 29.91, 1013.0, 37.391197, -122.100815, 108, 'Gemello, Mountain View', '94023')
+COMMITTED.
+SQL: INSERT INTO weather_nearby(station_id, time, weather, temp_f, temp_c, relative_humidity, uv_index, precip_in, pressure_in, pressure_mb, latitude, longitude, elevation, city, zip) VALUES('KCALOSAL73', '2017-07-16 13:24:55', 'Clear', 91.8, 33.2, 38, 12.0, 0.0, 29.91, 1013.0, 37.371819, -122.086212, 147, 'Cuesta Park, Los Altos', '94040')
+COMMITTED.
+
+PRINT THE OBSERVATION DATA FOR EACH STORED STATION
+________________________________________________________________________________
+
+SQL: SELECT id FROM pws_nearby
+
+________________________________________________________________________________
+QUERYING OBSERVATION TABLE FOR SUBSET OF DATA FOR PWS = "KCALOSAL73"...
+________________________________________________________________________________
+SQL: SELECT weather,temp_f,relative_humidity,city,time,id FROM weather_nearby WHERE station_id='KCALOSAL73'
+________________________________________
+ENTRYID: 6
+WEATHER: Clear
+TEMP(F): 91.8
+HUM(%): 38
+CITY: Cuesta Park, Los Altos
+TIME: 2017-07-16 13:24:55
+
+
+________________________________________________________________________________
+QUERYING OBSERVATION TABLE FOR SUBSET OF DATA FOR PWS = "KCAMOUNT150"...
+________________________________________________________________________________
+SQL: SELECT weather,temp_f,relative_humidity,city,time,id FROM weather_nearby WHERE station_id='KCAMOUNT150'
+________________________________________
+ENTRYID: 4
+WEATHER: Clear
+TEMP(F): 83.3
+HUM(%): 68
+CITY: Mountain View, Mountain View
+TIME: 2017-07-16 13:26:46
+
+
+________________________________________________________________________________
+QUERYING OBSERVATION TABLE FOR SUBSET OF DATA FOR PWS = "KCAMOUNT166"...
+________________________________________________________________________________
+SQL: SELECT weather,temp_f,relative_humidity,city,time,id FROM weather_nearby WHERE station_id='KCAMOUNT166'
+________________________________________
+ENTRYID: 5
+WEATHER: Clear
+TEMP(F): 103.6
+HUM(%): 19
+CITY: Gemello, Mountain View
+TIME: 2017-07-16 13:32:15
+
+
+________________________________________________________________________________
+QUERYING OBSERVATION TABLE FOR SUBSET OF DATA FOR PWS = "KCAMOUNT178"...
+________________________________________________________________________________
+SQL: SELECT weather,temp_f,relative_humidity,city,time,id FROM weather_nearby WHERE station_id='KCAMOUNT178'
+________________________________________
+ENTRYID: 3
+WEATHER: Clear
+TEMP(F): 99.3
+HUM(%): 23
+CITY: Jackson Park, Mountain View
+TIME: 2017-07-16 13:29:22
+
+
+________________________________________________________________________________
+QUERYING OBSERVATION TABLE FOR SUBSET OF DATA FOR PWS = "KCAMOUNT180"...
+________________________________________________________________________________
+SQL: SELECT weather,temp_f,relative_humidity,city,time,id FROM weather_nearby WHERE station_id='KCAMOUNT180'
+________________________________________
+ENTRYID: 2
+WEATHER: Clear
+TEMP(F): 94.3
+HUM(%): 27
+CITY: Wagon Wheel - Moffett Field, Mountain View
+TIME: 2017-07-16 13:25:46
+
+
+________________________________________________________________________________
+QUERYING OBSERVATION TABLE FOR SUBSET OF DATA FOR PWS = "KCAMOUNT50"...
+________________________________________________________________________________
+SQL: SELECT weather,temp_f,relative_humidity,city,time,id FROM weather_nearby WHERE station_id='KCAMOUNT50'
+________________________________________
+ENTRYID: 1
+WEATHER: Clear
+TEMP(F): 97.0
+HUM(%): 36
+CITY: Martens-Carmelita, Mountain View
+TIME: 2017-07-16 13:22:00
+
+________________________________________________________________________________
+CLOSING DATABASE...
+>>> 
